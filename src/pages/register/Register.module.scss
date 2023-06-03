@@ -1,0 +1,45 @@
+@import '../../styles/variables';
+
+.container {
+    background: $gray-solid;
+
+    &__form {
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        flex-wrap: wrap;
+        padding: 40px 16px 0 16px;
+        gap: 10px;
+        h1 {
+            color: #ffffff;
+            align-self: center;
+            margin-bottom: 37px;
+        }
+        input {
+            border: none;
+            background: $gray-solid;
+            font-size: 14px;
+            font-weight: 400;
+            border-bottom: 1px solid #ffffff;
+            padding-bottom: 8px;
+            outline: none;
+            color: #ffffff;
+        }
+    }
+    &__button {
+        margin-top: 30px;
+        align-self: center;
+    }
+    &__errorMessage {
+        display: flex;
+        align-content: center;
+        flex-wrap: wrap;
+        justify-content: center;
+        background: $light-lilac-linear;
+        border-radius: 30px;
+        opacity: 0.6;
+        height: 50px;
+        color: #a73b0f;
+        font-weight: bold;
+    }
+}

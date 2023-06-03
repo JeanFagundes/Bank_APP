@@ -1,0 +1,25 @@
+@import '../../styles/variables';
+
+.container {
+    background: $gray-solid;
+
+    &__logo {
+        display: flex;
+        height: 241px;
+        justify-content: center;
+        img {
+            align-self: end;
+            margin-bottom: 37px;
+            width: 100px;
+            height: 34px;
+        }
+    }
+
+    &__buttons {
+        display: flex;
+        flex-direction: column;
+        margin-top: 47px;
+        align-items: center;
+        gap: 16px;
+    }
+}
