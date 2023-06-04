@@ -4,6 +4,7 @@ import Login from 'pages/login';
 import Register from 'pages/register';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { UserProvider } from 'context/AuthContext';
+import Dashboard from 'pages/dashboard';
 
 function App() {
     return (
@@ -14,6 +15,7 @@ function App() {
                     <Route path="/" element={<Home />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
+                    <Route path="/dashboard" element={<Dashboard />} />
                 </Routes>
             </Router>
         </UserProvider>

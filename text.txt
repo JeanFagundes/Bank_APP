@@ -1,0 +1,29 @@
+Funcionalidades{
+
+*Cartão{
+    *Se não tiver cartão, renderizar o pedido de cartão
+    *dependendo do salario dar um limite X
+}
+
+*Tranferir{
+    contacts{
+        Fazer um json com alguns contatos
+    }
+    Tranferir para outro contato{
+        ao transferir pedir para deixar salvo o contato
+    }
+}
+*depositar
+
+*Historico para todas as saidas e entradas de dinheiro{
+    fazer filtros de saida e entrada de dinheiro, e maiores saides para menores saidas
+}
+
+*Dashboard do quanto ta gastando por minuto ou o quanto ta ganhando nos investimentos
+
+*investimentos{
+    colocar o quanto vai receber em um intervalo de tempo e somar com o saldo atual
+}
+
+
+}

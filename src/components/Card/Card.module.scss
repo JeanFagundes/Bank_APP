@@ -1,0 +1,64 @@
+@import 'styles/variables';
+.container {
+    // background: $light-yellow-linear;
+    border-radius: 20px;
+    &__cardArea {
+        display: grid;
+        row-gap: 20px;
+        padding: 20px;
+        grid-template-areas:
+            'visa banco paypass'
+            'card card expiration'
+            'nome nome nome';
+    }
+    &__item1 {
+        grid-area: visa;
+        align-self: center;
+        color: white;
+    }
+    &__item2 {
+        grid-area: banco;
+        align-self: center;
+        justify-self: center;
+    }
+    &__item3 {
+        grid-area: paypass;
+        align-self: center;
+        justify-self: end;
+        width: 20px;
+    }
+    &__item4 {
+        grid-column: 1fr / span 2;
+        grid-area: chip;
+        width: 24px;
+        position: absolute;
+        top: 408px;
+    }
+    &__item5 {
+        grid-area: card;
+        color: black;
+        font-weight: bold;
+        margin-top: 6px;
+        font-size: 14px;
+    }
+    &__textOcult {
+        font-size: 20px;
+    }
+    &__item6 {
+        grid-area: nome;
+        font-weight: 500;
+        font-size: 14px;
+        color: #272a32;
+    }
+    &__item7 {
+        grid-area: expiration;
+        text-align: end;
+        & .container__expiration {
+            font-size: 10px;
+        }
+        & .container__expirationDate {
+            font-size: 14px;
+            font-weight: bold;
+        }
+    }
+}

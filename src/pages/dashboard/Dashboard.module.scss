@@ -1,0 +1,17 @@
+@import 'styles/variables';
+
+.container {
+    background: $gray-solid;
+
+    &__header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        align-content: center;
+    }
+
+    &__card {
+        padding: 24px;
+    }
+}

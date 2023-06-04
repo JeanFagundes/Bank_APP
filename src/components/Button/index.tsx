@@ -9,10 +9,16 @@ interface IProps {
 }
 export default function Button({
     children,
-    background,
+    background = '',
     fontColor = '',
     handleClick,
 }: IProps) {
+    const primaryBackground = 'linear-gradient(to bottom, #fcffdf 0%, #f1fe87 100%)';
+
+    if (!background) {
+        background = primaryBackground;
+    }
+
     return (
         <button
             onClick={handleClick}

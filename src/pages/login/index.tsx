@@ -24,7 +24,7 @@ export default function Login() {
             setPassword('');
             return setErrorMessage('Senha invalida');
         }
-        navigate('/');
+        navigate('/dashboard');
     };
 
     const handleLogin = (event: ChangeEvent<HTMLInputElement>) => {
