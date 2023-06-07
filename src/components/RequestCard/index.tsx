@@ -1,11 +1,14 @@
 import Button from 'components/Button';
 import styles from './RequestCard.module.scss';
-import { useRef, useState } from 'react';
+import { useState, Dispatch, SetStateAction } from 'react';
 import Modal from './Modal';
 
-export default function RequestCard() {
+interface ISelectCardProps {
+    setSelectCard: Dispatch<SetStateAction<string>>;
+}
+
+export default function RequestCard({ setSelectCard }: ISelectCardProps) {
     const [modalOpen, setModalOpen] = useState(false);
-    const modalRef = useRef<HTMLDivElement>(null);
 
     const openModal = (): void => {
         setModalOpen(true);
@@ -29,7 +32,9 @@ export default function RequestCard() {
                     Request Card
                 </Button>
             </div>
-            {modalOpen && <Modal isOpen={false} onClose={closeModal}></Modal>}
+            {modalOpen && (
+                <Modal onClose={closeModal} setSelectCard={setSelectCard}></Modal>
+            )}
         </div>
     );
 }

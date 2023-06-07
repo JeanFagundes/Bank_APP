@@ -4,12 +4,14 @@ import styles from './Login.module.scss';
 import { ChangeEvent, FormEvent, useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserContext } from 'context/AuthContext';
+import { AuthContext } from 'context/IsAuthenticated';
 
 export default function Login() {
     const [cpf, setCpf] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const { users } = useContext(UserContext);
+    const authContext = useContext(AuthContext);
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -24,6 +26,7 @@ export default function Login() {
             setPassword('');
             return setErrorMessage('Senha invalida');
         }
+        authContext?.setIsLoggedIn(true);
         navigate('/dashboard');
     };
 

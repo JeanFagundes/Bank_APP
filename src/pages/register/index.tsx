@@ -35,6 +35,7 @@ export default function Register() {
             cpf,
             email,
             password,
+            cards: [],
         };
         setUsers([...users, newUser]);
         navigate('/login');

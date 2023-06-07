@@ -1,33 +1,43 @@
 import Card from 'components/Card';
 import styles from './Modal.module.scss';
-import { TouchEventHandler, useState } from 'react';
+import { TouchEventHandler, useState, Dispatch, SetStateAction } from 'react';
 import { FcNext } from 'react-icons/fc';
 import { FcPrevious } from 'react-icons/fc';
 import { AiOutlineClose } from 'react-icons/ai';
-import { IconContext } from 'react-icons';
+import Button from 'components/Button';
+import { ICard } from 'types/Card';
 
 interface IModalProps {
-    isOpen: boolean;
     onClose: () => void;
+    setSelectCard: Dispatch<SetStateAction<string>>;
 }
 
-export default function Modal({ isOpen, onClose }: IModalProps) {
+export default function Modal({ onClose, setSelectCard }: IModalProps) {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [touchStartX, setTouchStartX] = useState(0);
 
-    const items = [
-        <Card
-            background={'linear-gradient(to bottom, #eaeaea 0%, #b2d0ce 100%)'}
-            key="1"
-        />,
-        <Card
-            background={'linear-gradient(to bottom, #fcffdf 0%, #f1fe87 100%'}
-            key="2"
-        />,
-        <Card
-            background={'linear-gradient(to bottom, #f2eff4 0%, #b8a9c6 100%)'}
-            key="3"
-        />,
+    const items: ICard[] = [
+        {
+            id: 1,
+            cardNumber: '.... .... .... 4242',
+            expirationDate: '12/24',
+            balance: 0,
+            background: 'linear-gradient(to bottom, #eaeaea 0%, #b2d0ce 100%)',
+        },
+        {
+            id: 2,
+            cardNumber: '.... .... .... 4242',
+            expirationDate: '12/24',
+            balance: 0,
+            background: 'linear-gradient(to bottom, #fcffdf 0%, #f1fe87 100%',
+        },
+        {
+            id: 3,
+            cardNumber: '.... .... .... 4242',
+            expirationDate: '12/24',
+            balance: 0,
+            background: 'linear-gradient(to bottom, #f2eff4 0%, #b8a9c6 100%)',
+        },
     ];
 
     const handleNext = () => {
@@ -52,6 +62,10 @@ export default function Modal({ isOpen, onClose }: IModalProps) {
         }
     };
 
+    function handleSelectCard(card: string) {
+        setSelectCard(card);
+    }
+
     return (
         <div
             className={styles.container}
@@ -67,10 +81,26 @@ export default function Modal({ isOpen, onClose }: IModalProps) {
                 <FcPrevious size={25} onClick={handlePrevious}>
                     Previous
                 </FcPrevious>
-                <div className={styles.container__cards}>{items[currentIndex]}</div>
+                <div className={styles.container__cards}>
+                    {
+                        <Card
+                            background={items[currentIndex].background}
+                            cardNumber={'4242 4242 4242 4242'}
+                            expirationDate={'12/24'}
+                        />
+                    }
+                </div>
                 <FcNext size={25} onClick={handleNext}>
                     Next
                 </FcNext>
+            </div>
+            <div style={{ alignSelf: 'center' }}>
+                <Button
+                    handleClick={() => handleSelectCard(items[currentIndex].background)}
+                    background={''}
+                    fontColor={''}>
+                    Select
+                </Button>
             </div>
         </div>
     );

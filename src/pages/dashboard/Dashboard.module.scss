@@ -2,6 +2,7 @@
 
 .container {
     background: $gray-solid;
+    padding: 16px;
 
     &__header {
         display: flex;
@@ -12,6 +13,6 @@
     }
 
     &__card {
-        padding: 24px;
+        padding-top: 24px;
     }
 }

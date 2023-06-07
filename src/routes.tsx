@@ -4,20 +4,27 @@ import Login from 'pages/login';
 import Register from 'pages/register';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { UserProvider } from 'context/AuthContext';
+import { AuthProvider } from 'context/IsAuthenticated';
 import Dashboard from 'pages/dashboard';
+import Transfer from 'pages/transfer';
+import Deposit from 'pages/deposit';
 
 function App() {
     return (
         <UserProvider>
-            <Router>
-                <Header />
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/register" element={<Register />} />
-                    <Route path="/dashboard" element={<Dashboard />} />
-                </Routes>
-            </Router>
+            <AuthProvider>
+                <Router>
+                    <Header />
+                    <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/register" element={<Register />} />
+                        <Route path="/dashboard" element={<Dashboard />} />
+                        <Route path="/transfer" element={<Transfer />} />
+                        <Route path="/deposit" element={<Deposit />} />
+                    </Routes>
+                </Router>
+            </AuthProvider>
         </UserProvider>
     );
 }

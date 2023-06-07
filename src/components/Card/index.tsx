@@ -5,9 +5,18 @@ import logo from 'assets/imgs/logo.svg';
 import paypass from 'assets/imgs/paypass.svg';
 
 interface IBackgroundProps {
-    background?: string;
+    cardNumber: string;
+    expirationDate: string;
+    background: string;
 }
-export default function Card({ background }: IBackgroundProps) {
+export default function Card({
+    background,
+    cardNumber,
+    expirationDate,
+}: IBackgroundProps) {
+    if (!background) {
+        background = 'linear-gradient(to bottom, #eaeaea 0%, #b2d0ce 100%)';
+    }
     return (
         <div className={styles.container} style={{ background }}>
             <div className={styles.container__cardArea}>
@@ -18,15 +27,14 @@ export default function Card({ background }: IBackgroundProps) {
                     alt="logo Pay Pass"
                     className={styles.container__item3}
                 />
-                <img src={chip} alt="chip" className={styles.container__item4} />
+                {/* <img src={chip} alt="chip" className={styles.container__item4} /> */}
                 <div className={styles.container__item5}>
-                    <span className={styles.container__textOcult}>.... .... .... </span>
-                    <span>1576</span>
+                    <span className={styles.container__textOcult}>{cardNumber} </span>
                 </div>
-                <p className={styles.container__item6}>Zaramelo </p>
+                <p className={styles.container__item6}>Zaramello</p>
                 <div className={styles.container__item7}>
                     <p className={styles.container__expiration}>VALID THRU</p>
-                    <p className={styles.container__expirationDate}>01/23</p>
+                    <p className={styles.container__expirationDate}>{expirationDate}</p>
                 </div>
             </div>
         </div>
