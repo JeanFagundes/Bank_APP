@@ -1,22 +1,11 @@
 import styles from './Card.module.scss';
-import chip from 'assets/imgs/chip.svg';
+// import chip from 'assets/imgs/chip.svg';
 import visa from 'assets/imgs/visa.svg';
 import logo from 'assets/imgs/logo.svg';
 import paypass from 'assets/imgs/paypass.svg';
+import { IUserCardProps } from 'types/IUserCardProps';
 
-interface IBackgroundProps {
-    cardNumber: string;
-    expirationDate: string;
-    background: string;
-}
-export default function Card({
-    background,
-    cardNumber,
-    expirationDate,
-}: IBackgroundProps) {
-    if (!background) {
-        background = 'linear-gradient(to bottom, #eaeaea 0%, #b2d0ce 100%)';
-    }
+export default function Card({ cardNumber, expirationDate, background }: IUserCardProps) {
     return (
         <div className={styles.container} style={{ background }}>
             <div className={styles.container__cardArea}>

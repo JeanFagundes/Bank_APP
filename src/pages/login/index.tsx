@@ -1,45 +1,49 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react/no-unescaped-entities */
 import Button from 'components/Button';
 import styles from './Login.module.scss';
-import { ChangeEvent, FormEvent, useContext, useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { UserContext } from 'context/AuthContext';
-import { AuthContext } from 'context/IsAuthenticated';
+import { auth } from 'db/firebase';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 
 export default function Login() {
-    const [cpf, setCpf] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
-    const { users } = useContext(UserContext);
-    const authContext = useContext(AuthContext);
+    const navigate = useNavigate();
 
-    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        const user = users.find((user) => user.cpf === cpf);
-
-        if (!user) {
-            setPassword('');
-            return setErrorMessage('Cpf não cadastrado');
+        async function login(email: string, password: string) {
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                navigate('/dashboard');
+            } catch (error: any) {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                if (errorCode === 'auth/wrong-password') {
+                    setErrorMessage('Wrong email or password.');
+                } else {
+                    setErrorMessage(errorMessage);
+                }
+            } finally {
+                // setErrorMessage('');
+                // setPassword('');
+            }
         }
-        if (user.password !== password) {
-            setPassword('');
-            return setErrorMessage('Senha invalida');
-        }
-        authContext?.setIsLoggedIn(true);
-        navigate('/dashboard');
+        login(email, password);
     };
 
     const handleLogin = (event: ChangeEvent<HTMLInputElement>) => {
-        setCpf(event.target.value);
+        setEmail(event.target.value);
     };
     const handlePassword = (event: ChangeEvent<HTMLInputElement>) => {
         setPassword(event.target.value);
     };
 
-    const navigate = useNavigate();
     const primaryBackground = 'linear-gradient(to bottom, #fcffdf 0%, #f1fe87 100%)';
-
     return (
         <div className={styles.container}>
             <form className={styles.container__form} onSubmit={handleSubmit}>
@@ -51,8 +55,8 @@ export default function Login() {
                 )}
                 <input
                     type="text"
-                    placeholder="CPF"
-                    value={cpf}
+                    placeholder="Email"
+                    value={email}
                     onChange={handleLogin}
                     required
                 />

@@ -3,27 +3,43 @@ import styles from './Dashboard.module.scss';
 import Buscador from 'components/Buscador';
 import RequestCard from 'components/RequestCard';
 import Card from 'components/Card';
-import { ReactNode, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import ListFinance from 'components/ListFinance';
+import { findCardUser, showCards } from 'helpers/RequisiçõesFirebase';
+import { IUserCardProps } from 'types/IUserCardProps';
+import { authUserUid } from 'db/firebase';
 
 export default function Dashboard() {
-    const [selectCard, setSelectCard] = useState('');
-    const [card, setCard] = useState<ReactNode | null>(null);
-
-    useEffect(() => {
-        if (selectCard) {
-            setCard(<Card cardNumber={''} expirationDate={''} background={''} />);
+    const [card, setCard] = useState<IUserCardProps>();
+    const [hasCard, setHasCard] = useState(false);
+    async function verifyCard() {
+        if (authUserUid) {
+            const result = await findCardUser({ userId: authUserUid });
+            setHasCard(result);
         }
-    }, [selectCard]);
-
+    }
+    async function showCard() {
+        if (authUserUid) {
+            const addCard = await showCards({ userId: authUserUid });
+            setCard(addCard[0]);
+        }
+    }
+    useEffect(() => {
+        verifyCard();
+        showCard();
+    }, []);
     return (
         <div className={styles.container}>
             <div className={styles.container__header}>
-                <Balance />
+                {card && <Balance balance={card.balance} />}
                 <Buscador />
             </div>
             <div className={styles.container__card}>
-                {selectCard ? card : <RequestCard setSelectCard={setSelectCard} />}
+                {card && hasCard ? (
+                    <Card {...card} />
+                ) : (
+                    <RequestCard setHasCard={setHasCard} />
+                )}
             </div>
             <div>
                 <ListFinance />

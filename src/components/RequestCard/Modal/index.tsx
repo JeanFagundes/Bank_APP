@@ -5,36 +5,36 @@ import { FcNext } from 'react-icons/fc';
 import { FcPrevious } from 'react-icons/fc';
 import { AiOutlineClose } from 'react-icons/ai';
 import Button from 'components/Button';
-import { ICard } from 'types/Card';
+import { addCardToUser } from 'helpers/RequisiçõesFirebase';
+import { IUserCardProps } from 'types/IUserCardProps';
+import { authUserUid } from 'db/firebase';
 
 interface IModalProps {
     onClose: () => void;
-    setSelectCard: Dispatch<SetStateAction<string>>;
+    setHasCard: Dispatch<SetStateAction<boolean>>;
 }
 
-export default function Modal({ onClose, setSelectCard }: IModalProps) {
+export default function Modal({ onClose, setHasCard }: IModalProps) {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [touchStartX, setTouchStartX] = useState(0);
 
-    const items: ICard[] = [
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const items: any[] = [
         {
-            id: 1,
-            cardNumber: '.... .... .... 4242',
-            expirationDate: '12/24',
+            cardNumber: `.... .... .... ${generateRandomNumber('4')}`,
+            expirationDate: `${generateRandomNumber('2')}`,
             balance: 0,
             background: 'linear-gradient(to bottom, #eaeaea 0%, #b2d0ce 100%)',
         },
         {
-            id: 2,
-            cardNumber: '.... .... .... 4242',
-            expirationDate: '12/24',
+            cardNumber: `.... .... .... ${generateRandomNumber('4')}`,
+            expirationDate: `${generateRandomNumber('2')}`,
             balance: 0,
             background: 'linear-gradient(to bottom, #fcffdf 0%, #f1fe87 100%',
         },
         {
-            id: 3,
-            cardNumber: '.... .... .... 4242',
-            expirationDate: '12/24',
+            cardNumber: `.... .... .... ${generateRandomNumber('4')}`,
+            expirationDate: `${generateRandomNumber('2')}`,
             balance: 0,
             background: 'linear-gradient(to bottom, #f2eff4 0%, #b8a9c6 100%)',
         },
@@ -62,8 +62,29 @@ export default function Modal({ onClose, setSelectCard }: IModalProps) {
         }
     };
 
-    function handleSelectCard(card: string) {
-        setSelectCard(card);
+    function handleSelectCard(card: IUserCardProps) {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        if (authUserUid) {
+            card.userId = authUserUid;
+            addCardToUser(card);
+            setHasCard(true);
+        } else {
+            console.log('Erro ao adicionar Cartão, usuario não está autenticado');
+        }
+    }
+
+    function generateRandomNumber(quantity: string) {
+        // Gera um número aleatório entre 1000 e 9999
+        if (quantity === '2') {
+            //mês
+            const first = Math.floor(Math.random() * 11) + 1;
+            //ano
+            const second = Math.floor(Math.random() * 7) + 23;
+            const result = `${first.toString().padStart(2, '0')} / ${second.toString()}`;
+            return result;
+        }
+        const numero = Math.floor(Math.random() * 9000) + 1000;
+        return numero.toString();
     }
 
     return (
@@ -85,8 +106,10 @@ export default function Modal({ onClose, setSelectCard }: IModalProps) {
                     {
                         <Card
                             background={items[currentIndex].background}
-                            cardNumber={'4242 4242 4242 4242'}
-                            expirationDate={'12/24'}
+                            cardNumber={`.... .... .... ${generateRandomNumber('4')}`}
+                            expirationDate={`${generateRandomNumber('2')}`}
+                            userId={''}
+                            balance={0}
                         />
                     }
                 </div>
@@ -96,7 +119,7 @@ export default function Modal({ onClose, setSelectCard }: IModalProps) {
             </div>
             <div style={{ alignSelf: 'center' }}>
                 <Button
-                    handleClick={() => handleSelectCard(items[currentIndex].background)}
+                    handleClick={() => handleSelectCard(items[currentIndex])}
                     background={''}
                     fontColor={''}>
                     Select

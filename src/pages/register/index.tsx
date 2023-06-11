@@ -1,9 +1,12 @@
-import { ChangeEvent, FormEvent, useContext, useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import styles from './Register.module.scss';
 import Button from 'components/Button';
 import { useNavigate } from 'react-router-dom';
 import { IUser } from 'types/User';
-import { UserContext } from 'context/AuthContext';
+import { auth, db } from 'db/firebase';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { collection, doc, setDoc } from 'firebase/firestore';
+
 export default function Register() {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -12,22 +15,33 @@ export default function Register() {
     const [email, setEmail] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
 
-    const { users, setUsers } = useContext(UserContext);
-
-    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const verifyCPF = users.find((user) => user.cpf === cpf);
 
         if (password !== confirmPassword) {
             return setErrorMessage('Passwords do not match');
         }
 
         if (cpf.length < 11) {
-            return setErrorMessage('CPF inválido');
+            return setErrorMessage('CPF não tem o tamanho exigido de 11 digitos');
         }
 
-        if (verifyCPF) {
-            return setErrorMessage('CPF já cadastrado');
+        async function cadastrarAuthenticator(email: string, senha: string) {
+            const result = await createUserWithEmailAndPassword(auth, email, senha)
+                .then((userCredentials) => {
+                    const userUid = userCredentials.user.uid;
+                    cadastrarFirestore(newUser, userUid);
+                })
+                .catch((error) => console.log(error));
+            return result;
+        }
+
+        cadastrarAuthenticator(email, password);
+
+        async function cadastrarFirestore(newUser: IUser, userUid: string) {
+            const userRef = doc(collection(db, 'users'), userUid);
+            await setDoc(userRef, newUser);
+            return userRef;
         }
 
         const newUser: IUser = {
@@ -37,7 +51,6 @@ export default function Register() {
             password,
             cards: [],
         };
-        setUsers([...users, newUser]);
         navigate('/login');
     };
 

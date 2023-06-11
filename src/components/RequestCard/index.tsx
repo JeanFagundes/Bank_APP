@@ -4,10 +4,10 @@ import { useState, Dispatch, SetStateAction } from 'react';
 import Modal from './Modal';
 
 interface ISelectCardProps {
-    setSelectCard: Dispatch<SetStateAction<string>>;
+    setHasCard: Dispatch<SetStateAction<boolean>>;
 }
 
-export default function RequestCard({ setSelectCard }: ISelectCardProps) {
+export default function RequestCard({ setHasCard }: ISelectCardProps) {
     const [modalOpen, setModalOpen] = useState(false);
 
     const openModal = (): void => {
@@ -32,9 +32,7 @@ export default function RequestCard({ setSelectCard }: ISelectCardProps) {
                     Request Card
                 </Button>
             </div>
-            {modalOpen && (
-                <Modal onClose={closeModal} setSelectCard={setSelectCard}></Modal>
-            )}
+            {modalOpen && <Modal onClose={closeModal} setHasCard={setHasCard}></Modal>}
         </div>
     );
 }
