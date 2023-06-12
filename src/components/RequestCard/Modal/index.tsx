@@ -1,13 +1,13 @@
 import Card from 'components/Card';
 import styles from './Modal.module.scss';
-import { TouchEventHandler, useState, Dispatch, SetStateAction } from 'react';
+import { TouchEventHandler, useState, Dispatch, SetStateAction, useContext } from 'react';
 import { FcNext } from 'react-icons/fc';
 import { FcPrevious } from 'react-icons/fc';
 import { AiOutlineClose } from 'react-icons/ai';
 import Button from 'components/Button';
 import { addCardToUser } from 'helpers/RequisiçõesFirebase';
 import { IUserCardProps } from 'types/IUserCardProps';
-import { authUserUid } from 'db/firebase';
+import { AuthContext } from 'context/AuthContext';
 
 interface IModalProps {
     onClose: () => void;
@@ -17,6 +17,7 @@ interface IModalProps {
 export default function Modal({ onClose, setHasCard }: IModalProps) {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [touchStartX, setTouchStartX] = useState(0);
+    const { userAuthentication } = useContext(AuthContext);
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const items: any[] = [
@@ -64,8 +65,8 @@ export default function Modal({ onClose, setHasCard }: IModalProps) {
 
     function handleSelectCard(card: IUserCardProps) {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        if (authUserUid) {
-            card.userId = authUserUid;
+        if (userAuthentication) {
+            card.userId = userAuthentication.uid;
             addCardToUser(card);
             setHasCard(true);
         } else {
@@ -80,7 +81,7 @@ export default function Modal({ onClose, setHasCard }: IModalProps) {
             const first = Math.floor(Math.random() * 11) + 1;
             //ano
             const second = Math.floor(Math.random() * 7) + 23;
-            const result = `${first.toString().padStart(2, '0')} / ${second.toString()}`;
+            const result = `${first.toString().padStart(2, '0')}/${second.toString()}`;
             return result;
         }
         const numero = Math.floor(Math.random() * 9000) + 1000;

@@ -3,11 +3,7 @@ import { BiTransferAlt } from 'react-icons/bi';
 import { BsPiggyBank } from 'react-icons/bs';
 import { ReactComponent as InvestmentIcon } from 'assets/imgs/investment.svg';
 import { useNavigate } from 'react-router-dom';
-import { ReactNode } from 'react';
 
-interface Props {
-    card: ReactNode | null;
-}
 export default function ListFinance() {
     const navigate = useNavigate();
 

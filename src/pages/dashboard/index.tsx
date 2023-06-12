@@ -3,24 +3,27 @@ import styles from './Dashboard.module.scss';
 import Buscador from 'components/Buscador';
 import RequestCard from 'components/RequestCard';
 import Card from 'components/Card';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import ListFinance from 'components/ListFinance';
 import { findCardUser, showCards } from 'helpers/RequisiçõesFirebase';
 import { IUserCardProps } from 'types/IUserCardProps';
-import { authUserUid } from 'db/firebase';
+import { AuthContext } from 'context/AuthContext';
 
 export default function Dashboard() {
     const [card, setCard] = useState<IUserCardProps>();
     const [hasCard, setHasCard] = useState(false);
+    const { userAuthentication } = useContext(AuthContext);
     async function verifyCard() {
-        if (authUserUid) {
-            const result = await findCardUser({ userId: authUserUid });
+        if (userAuthentication) {
+            const userId = userAuthentication.uid;
+            const result = await findCardUser({ userId });
             setHasCard(result);
         }
     }
     async function showCard() {
-        if (authUserUid) {
-            const addCard = await showCards({ userId: authUserUid });
+        if (userAuthentication) {
+            const userId = userAuthentication.uid;
+            const addCard = await showCards({ userId });
             setCard(addCard[0]);
         }
     }

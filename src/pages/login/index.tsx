@@ -28,9 +28,6 @@ export default function Login() {
                 } else {
                     setErrorMessage(errorMessage);
                 }
-            } finally {
-                // setErrorMessage('');
-                // setPassword('');
             }
         }
         login(email, password);

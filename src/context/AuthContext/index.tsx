@@ -1,23 +1,37 @@
-import { ReactNode, createContext, useContext, useState } from 'react';
-import { IUser } from 'types/User';
+import { createContext, useEffect, useState } from 'react';
+import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
 
-interface IUserContextProps {
-    users: IUser[];
-    setUsers: React.Dispatch<React.SetStateAction<IUser[]>>;
+interface AuthContextProps {
+    userAuthentication: User | null;
+    setUserAuthentication: React.Dispatch<React.SetStateAction<User | null>>;
 }
 
-export const UserContext = createContext<IUserContextProps>({} as IUserContextProps);
+export const AuthContext = createContext<AuthContextProps>({
+    userAuthentication: null,
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    setUserAuthentication: () => {},
+});
 
-interface UserProviderProps {
-    children: ReactNode;
+interface AuthProviderProps {
+    children: React.ReactNode;
 }
 
-export const UserProvider = ({ children }: UserProviderProps) => {
-    const [users, setUsers] = useState<IUser[]>([]);
+export const AuthProvider = ({ children }: AuthProviderProps) => {
+    const [userAuthentication, setUserAuthentication] = useState<User | null>(null);
+
+    useEffect(() => {
+        const auth = getAuth();
+
+        const unsubscribe = onAuthStateChanged(auth, (userAuthentication) => {
+            setUserAuthentication(userAuthentication);
+        });
+
+        return () => unsubscribe();
+    }, []);
 
     return (
-        <UserContext.Provider value={{ users, setUsers }}>
+        <AuthContext.Provider value={{ userAuthentication, setUserAuthentication }}>
             {children}
-        </UserContext.Provider>
+        </AuthContext.Provider>
     );
 };

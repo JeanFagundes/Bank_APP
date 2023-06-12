@@ -12,11 +12,14 @@ const firebaseConfig = {
     appId: process.env.REACT_APP_APP_ID,
     measurementId: process.env.REACT_APP_MEASUREMENT_ID,
 };
-console.log(process.env.MEASUREMENT_ID);
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = initializeAuth(app);
 const db = getFirestore(app);
-const authUserUid = getAuth().currentUser?.uid;
+
+const currentUser = getAuth().currentUser;
+const authUserUid = currentUser ? currentUser.uid : undefined;
+
+// console.log(teste);
 
 export { db, auth, authUserUid };
