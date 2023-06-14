@@ -6,15 +6,30 @@ import logovisa from 'assets/imgs/logovisa.svg';
 import { useContext, useState } from 'react';
 import { AuthContext } from 'context/AuthContext';
 import { increaseBalance } from 'helpers/RequisiçõesFirebase';
+import { UserContext } from 'context/userContext';
 
 export default function DepositComponent() {
     const [value, setValue] = useState('');
+    const [message, setMessage] = useState('');
+
     const { userAuthentication } = useContext(AuthContext);
+    const { userData } = useContext(UserContext);
+
     console.log('recarregou');
     function handleClickIncrementBalance() {
         if (userAuthentication) {
             const userId = userAuthentication.uid.toString();
-            increaseBalance(userId);
+            const balance = Number(value.replace(/,/g, '')); // Remover vírgulas;
+            increaseBalance(userId, balance)
+                .then(() => {
+                    setMessage(`Você depositou R$${balance} com sucesso`);
+                    setTimeout(() => {
+                        setMessage('');
+                    }, 4000);
+                })
+                .catch((error) => {
+                    setMessage(error.message);
+                });
         }
     }
 
@@ -43,9 +58,15 @@ export default function DepositComponent() {
                 <MdArrowBackIos onClick={handleClick} />
                 <p>Deposit</p>
             </div>
+            {message && (
+                <div className={styles.container__message}>
+                    <p>{message}</p>
+                </div>
+            )}
+
             <div className={styles.container__title}>
                 <p>Balance</p>
-                <h3>R$ 0</h3>
+                <h3>{userData?.cards[0]?.balance || '0'}</h3>
             </div>
 
             <div className={styles.container__input}>

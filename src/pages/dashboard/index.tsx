@@ -5,43 +5,48 @@ import RequestCard from 'components/RequestCard';
 import Card from 'components/Card';
 import { useContext, useEffect, useState } from 'react';
 import ListFinance from 'components/ListFinance';
-import { findCardUser, showCards } from 'helpers/RequisiçõesFirebase';
-import { IUserCardProps } from 'types/IUserCardProps';
 import { AuthContext } from 'context/AuthContext';
+import { UserContext } from 'context/userContext';
+import { IUserData } from 'types/UserData';
+import { ICard } from 'types/Card';
 
 export default function Dashboard() {
-    const [card, setCard] = useState<IUserCardProps>();
-    const [hasCard, setHasCard] = useState(false);
+    const [card, setCard] = useState<IUserData | ICard | undefined>();
+    const [loading, setLoading] = useState(true);
     const { userAuthentication } = useContext(AuthContext);
-    async function verifyCard() {
-        if (userAuthentication) {
-            const userId = userAuthentication.uid;
-            const result = await findCardUser({ userId });
-            setHasCard(result);
-        }
-    }
+    const { userData } = useContext(UserContext);
+
+    console.log(userAuthentication);
+
     async function showCard() {
-        if (userAuthentication) {
-            const userId = userAuthentication.uid;
-            const addCard = await showCards({ userId });
-            setCard(addCard[0]);
+        if (userData && userData.cards[0]) {
+            setCard(userData.cards[0]);
         }
     }
     useEffect(() => {
-        verifyCard();
-        showCard();
+        async function fetchData() {
+            await showCard();
+            setLoading(false);
+        }
+        fetchData();
     }, []);
+
+    console.log(userData?.cards ? [...userData.cards] : []);
+
+    if (loading) {
+        return <div>Loading...</div>; // ou qualquer outra indicação de carregamento
+    }
     return (
         <div className={styles.container}>
             <div className={styles.container__header}>
-                {card && <Balance balance={card.balance} />}
+                {card && userData && <Balance balance={userData.cards[0].balance} />}
                 <Buscador />
             </div>
             <div className={styles.container__card}>
-                {card && hasCard ? (
-                    <Card {...card} />
+                {card && userData?.cards[0] ? (
+                    <Card {...userData.cards[0]} />
                 ) : (
-                    <RequestCard setHasCard={setHasCard} />
+                    <RequestCard />
                 )}
             </div>
             <div>

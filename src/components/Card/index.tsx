@@ -3,9 +3,9 @@ import styles from './Card.module.scss';
 import visa from 'assets/imgs/visa.svg';
 import logo from 'assets/imgs/logo.svg';
 import paypass from 'assets/imgs/paypass.svg';
-import { IUserCardProps } from 'types/IUserCardProps';
+import { ICard } from 'types/Card';
 
-export default function Card({ cardNumber, expirationDate, background }: IUserCardProps) {
+export default function Card({ cardNumber, expirationDate, background }: ICard) {
     return (
         <div className={styles.container} style={{ background }}>
             <div className={styles.container__cardArea}>

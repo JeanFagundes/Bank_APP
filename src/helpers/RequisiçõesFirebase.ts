@@ -1,3 +1,4 @@
+import { AuthContext } from 'context/AuthContext';
 import { db } from 'db/firebase';
 import {
     DocumentReference,
@@ -9,7 +10,9 @@ import {
     setDoc,
     updateDoc,
     deleteField,
+    arrayRemove,
 } from 'firebase/firestore';
+import { useContext } from 'react';
 import { ICard } from 'types/Card';
 import { IUserCardProps } from 'types/IUserCardProps';
 
@@ -55,7 +58,7 @@ export async function showCards({ userId }: IUserProps) {
     return userCard;
 }
 
-export async function increaseBalance(userId: string) {
+export async function increaseBalance(userId: string, balance: number) {
     const userRef = doc(db, 'users', userId);
     const docSnap = await getDoc(userRef);
     // const userData = await docSnap.get('cards');
@@ -64,18 +67,19 @@ export async function increaseBalance(userId: string) {
     const updatedCards = userData.map((card: ICard) => {
         if (typeof card.balance === 'number') {
             console.log(typeof card.balance);
-            const updatedBalance = card.balance + 50;
-            const updatedBalanceConvert = Number(updatedBalance);
-            return { ...card, balance: updatedBalanceConvert };
+            const updatedBalance = card.balance + balance;
+            return { ...card, balance: updatedBalance };
         }
         return card;
     });
 
     console.log(updatedCards);
 
-    // Delete the old 'cards' field from the document
-    await setDoc(userRef, { cards: deleteField() }, { merge: true });
+    await updateDoc(userRef, {
+        cards: arrayRemove(...userData), // Remove todos os elementos antigos do array
+    });
 
-    // Add the updated 'cards' field back to the document
-    await setDoc(userRef, { cards: arrayUnion(...updatedCards) }, { merge: true });
+    await updateDoc(userRef, {
+        cards: arrayUnion(...updatedCards), // Adiciona os novos elementos ao array
+    });
 }

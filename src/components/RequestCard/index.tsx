@@ -1,13 +1,9 @@
 import Button from 'components/Button';
 import styles from './RequestCard.module.scss';
-import { useState, Dispatch, SetStateAction } from 'react';
+import { useState } from 'react';
 import Modal from './Modal';
 
-interface ISelectCardProps {
-    setHasCard: Dispatch<SetStateAction<boolean>>;
-}
-
-export default function RequestCard({ setHasCard }: ISelectCardProps) {
+export default function RequestCard() {
     const [modalOpen, setModalOpen] = useState(false);
 
     const openModal = (): void => {
@@ -32,7 +28,7 @@ export default function RequestCard({ setHasCard }: ISelectCardProps) {
                     Request Card
                 </Button>
             </div>
-            {modalOpen && <Modal onClose={closeModal} setHasCard={setHasCard}></Modal>}
+            {modalOpen && <Modal onClose={closeModal}></Modal>}
         </div>
     );
 }

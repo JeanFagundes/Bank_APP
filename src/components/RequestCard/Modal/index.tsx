@@ -1,6 +1,6 @@
 import Card from 'components/Card';
 import styles from './Modal.module.scss';
-import { TouchEventHandler, useState, Dispatch, SetStateAction, useContext } from 'react';
+import { TouchEventHandler, useState, useContext } from 'react';
 import { FcNext } from 'react-icons/fc';
 import { FcPrevious } from 'react-icons/fc';
 import { AiOutlineClose } from 'react-icons/ai';
@@ -11,16 +11,15 @@ import { AuthContext } from 'context/AuthContext';
 
 interface IModalProps {
     onClose: () => void;
-    setHasCard: Dispatch<SetStateAction<boolean>>;
 }
 
-export default function Modal({ onClose, setHasCard }: IModalProps) {
+export default function Modal({ onClose }: IModalProps) {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [touchStartX, setTouchStartX] = useState(0);
     const { userAuthentication } = useContext(AuthContext);
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const items: any[] = [
+    const items = [
         {
             cardNumber: `.... .... .... ${generateRandomNumber('4')}`,
             expirationDate: `${generateRandomNumber('2')}`,
@@ -39,7 +38,7 @@ export default function Modal({ onClose, setHasCard }: IModalProps) {
             balance: 0,
             background: 'linear-gradient(to bottom, #f2eff4 0%, #b8a9c6 100%)',
         },
-    ];
+    ] as IUserCardProps[];
 
     const handleNext = () => {
         setCurrentIndex((prevIndex) => (prevIndex + 1) % items.length);
@@ -68,7 +67,6 @@ export default function Modal({ onClose, setHasCard }: IModalProps) {
         if (userAuthentication) {
             card.userId = userAuthentication.uid;
             addCardToUser(card);
-            setHasCard(true);
         } else {
             console.log('Erro ao adicionar Cartão, usuario não está autenticado');
         }
@@ -109,7 +107,6 @@ export default function Modal({ onClose, setHasCard }: IModalProps) {
                             background={items[currentIndex].background}
                             cardNumber={`.... .... .... ${generateRandomNumber('4')}`}
                             expirationDate={`${generateRandomNumber('2')}`}
-                            userId={''}
                             balance={0}
                         />
                     }
