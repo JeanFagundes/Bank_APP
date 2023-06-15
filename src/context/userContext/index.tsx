@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import { doc, onSnapshot } from 'firebase/firestore';
 import { db } from 'db/firebase';
@@ -7,6 +8,8 @@ import { IUserData } from 'types/UserData';
 interface UserContextData {
     userData: IUserData | null;
     setUserData: React.Dispatch<React.SetStateAction<IUserData | null>>;
+    loading: boolean;
+    setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface AuthProviderProps {
@@ -17,11 +20,14 @@ export const UserContext = createContext<UserContextData>({
     userData: null,
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     setUserData: () => {},
+    loading: true,
+    setLoading: () => {},
 });
 
 export const UserProvider = ({ children }: AuthProviderProps) => {
     const [userData, setUserData] = useState<IUserData | null>(null);
     const { userAuthentication } = useContext(AuthContext);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -38,15 +44,19 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
                             setUserData(docSnap.data() as IUserData);
                         } else {
                             setUserData(null);
+                            setLoading(false);
                         }
                     });
+                } else {
+                    setLoading(false);
                 }
             } catch (error) {
                 console.error('Erro ao buscar os dados do usuário:', error);
+                setLoading(false);
             }
         };
-
         fetchUserData();
+        console.log(loading);
 
         return () => {
             unsubscribe();
@@ -54,7 +64,7 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
     }, [userAuthentication]);
 
     return (
-        <UserContext.Provider value={{ userData, setUserData }}>
+        <UserContext.Provider value={{ userData, setUserData, loading, setLoading }}>
             {children}
         </UserContext.Provider>
     );

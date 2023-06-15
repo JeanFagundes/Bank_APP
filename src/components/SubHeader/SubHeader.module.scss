@@ -1,0 +1,20 @@
+.subHeader {
+    display: flex;
+    align-items: center;
+    p {
+        align-self: center;
+        margin: auto;
+        font-size: 1.17em;
+        padding-right: 32px;
+    }
+    &__icon {
+        background: #3e3e3e;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        padding-left: 5px;
+    }
+}

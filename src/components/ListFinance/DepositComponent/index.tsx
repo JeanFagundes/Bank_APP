@@ -1,34 +1,36 @@
-import { MdArrowBackIos } from 'react-icons/md';
 import styles from './DepositComponent.module.scss';
-import { useNavigate } from 'react-router-dom';
 import Button from 'components/Button';
 import logovisa from 'assets/imgs/logovisa.svg';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from 'context/AuthContext';
 import { increaseBalance } from 'helpers/RequisiçõesFirebase';
 import { UserContext } from 'context/userContext';
+import SubHeader from 'components/SubHeader';
 
 export default function DepositComponent() {
     const [value, setValue] = useState('');
     const [message, setMessage] = useState('');
-
     const { userAuthentication } = useContext(AuthContext);
-    const { userData } = useContext(UserContext);
+    const { userData, loading, setLoading } = useContext(UserContext);
 
-    console.log('recarregou');
     function handleClickIncrementBalance() {
         if (userAuthentication) {
             const userId = userAuthentication.uid.toString();
             const balance = Number(value.replace(/,/g, '')); // Remover vírgulas;
+            setLoading(true);
             increaseBalance(userId, balance)
                 .then(() => {
-                    setMessage(`Você depositou R$${balance} com sucesso`);
+                    setMessage(`Você depositou R$${balance.toFixed(2)} com sucesso`);
+                    setValue('');
                     setTimeout(() => {
                         setMessage('');
                     }, 4000);
                 })
                 .catch((error) => {
                     setMessage(error.message);
+                })
+                .finally(() => {
+                    setLoading(false);
                 });
         }
     }
@@ -47,17 +49,16 @@ export default function DepositComponent() {
         }
     };
 
-    const navigate = useNavigate();
-    function handleClick() {
-        navigate('/dashboard');
+    const numberCard = userData?.cards[0]?.cardNumber?.split(' ')[3];
+    const balance = userData?.cards[0]?.balance.toLocaleString('en-US');
+
+    if (loading) {
+        return <div>Loading...</div>;
     }
 
     return (
         <div className={styles.container}>
-            <div className={styles.container__header}>
-                <MdArrowBackIos onClick={handleClick} />
-                <p>Deposit</p>
-            </div>
+            <SubHeader> Deposit </SubHeader>
             {message && (
                 <div className={styles.container__message}>
                     <p>{message}</p>
@@ -66,7 +67,7 @@ export default function DepositComponent() {
 
             <div className={styles.container__title}>
                 <p>Balance</p>
-                <h3>{userData?.cards[0]?.balance || '0'}</h3>
+                <h3>{balance}</h3>
             </div>
 
             <div className={styles.container__input}>
@@ -79,10 +80,10 @@ export default function DepositComponent() {
                 </li>
                 <li className={styles.container__twoItens}>
                     <p>Visa</p>
-                    <p>R$ 500.00</p>
+                    <p>{balance}</p>
                 </li>
                 <li className={styles.container__creditCardItem}>
-                    <p>** 5534</p>
+                    <p>** {numberCard}</p>
                 </li>
             </ul>
 

@@ -12,7 +12,6 @@ import {
     deleteField,
     arrayRemove,
 } from 'firebase/firestore';
-import { useContext } from 'react';
 import { ICard } from 'types/Card';
 import { IUserCardProps } from 'types/IUserCardProps';
 
@@ -66,15 +65,11 @@ export async function increaseBalance(userId: string, balance: number) {
 
     const updatedCards = userData.map((card: ICard) => {
         if (typeof card.balance === 'number') {
-            console.log(typeof card.balance);
             const updatedBalance = card.balance + balance;
             return { ...card, balance: updatedBalance };
         }
         return card;
     });
-
-    console.log(updatedCards);
-
     await updateDoc(userRef, {
         cards: arrayRemove(...userData), // Remove todos os elementos antigos do array
     });
