@@ -8,12 +8,14 @@ import Transfer from 'pages/transfer';
 import Deposit from 'pages/deposit';
 import { AuthProvider } from 'context/AuthContext';
 import { UserProvider } from 'context/userContext';
+import Investment from 'pages/investment';
+import ContactChat from 'pages/ContactChat';
 
 function App() {
     return (
-        <AuthProvider>
-            <UserProvider>
-                <Router>
+        <Router>
+            <AuthProvider>
+                <UserProvider>
                     <Header />
                     <Routes>
                         <Route path="/" element={<Home />} />
@@ -22,10 +24,12 @@ function App() {
                         <Route path="/dashboard" element={<Dashboard />} />
                         <Route path="/transfer" element={<Transfer />} />
                         <Route path="/deposit" element={<Deposit />} />
+                        <Route path="/investment" element={<Investment />} />
+                        <Route path="/contactChat/:name" element={<ContactChat />} />
                     </Routes>
-                </Router>
-            </UserProvider>
-        </AuthProvider>
+                </UserProvider>
+            </AuthProvider>
+        </Router>
     );
 }
 export default App;

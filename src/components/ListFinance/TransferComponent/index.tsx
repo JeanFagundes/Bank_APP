@@ -1,20 +1,13 @@
 import styles from './TransferComponent.module.scss';
-import { MdArrowBackIos } from 'react-icons/md';
 import avatar from 'assets/imgs/avatar.png';
-import { useNavigate } from 'react-router-dom';
+import SubHeader from 'components/SubHeader';
+import Contacts from './Contacts';
 
 export default function TransferComponent() {
-    const navigate = useNavigate();
-
-    function handleClick() {
-        navigate('/dashboard');
-    }
-
     return (
         <div className={styles.container}>
-            <div className={styles.container__header}>
-                <MdArrowBackIos onClick={handleClick} />
-                <p>Transfer</p>
+            <div className={styles.container__subHeader}>
+                <SubHeader name={'Transfer'} />
             </div>
             <div className={styles.container__title}>
                 <p>Balance</p>
@@ -44,28 +37,7 @@ export default function TransferComponent() {
                 </ul>
             </div>
 
-            {/* Lista de contatos que estão salvos*/}
-            <div className={styles.container__contacts}>
-                <p>Contacts</p>
-                <ul>
-                    <li>
-                        <img src={avatar} alt="avatar" />
-                        <p>John</p>
-                    </li>
-                    <li>
-                        <img src={avatar} alt="avatar" />
-                        <p>Jeniffer</p>
-                    </li>
-                    <li>
-                        <img src={avatar} alt="avatar" />
-                        <p>Maya</p>
-                    </li>
-                    <li>
-                        <img src={avatar} alt="avatar" />
-                        <p>Sister Alice</p>
-                    </li>
-                </ul>
-            </div>
+            <Contacts />
         </div>
     );
 }

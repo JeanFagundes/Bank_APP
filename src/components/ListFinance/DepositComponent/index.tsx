@@ -1,7 +1,7 @@
 import styles from './DepositComponent.module.scss';
 import Button from 'components/Button';
 import logovisa from 'assets/imgs/logovisa.svg';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { AuthContext } from 'context/AuthContext';
 import { increaseBalance } from 'helpers/RequisiçõesFirebase';
 import { UserContext } from 'context/userContext';
@@ -58,7 +58,7 @@ export default function DepositComponent() {
 
     return (
         <div className={styles.container}>
-            <SubHeader> Deposit </SubHeader>
+            <SubHeader name={'Deposit'}></SubHeader>
             {message && (
                 <div className={styles.container__message}>
                     <p>{message}</p>
