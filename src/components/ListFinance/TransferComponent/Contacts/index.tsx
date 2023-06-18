@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import styles from './Contacts.module.scss';
-import avatar from 'assets/imgs/avatar.png';
+import contactsData from 'data/contacts.json';
 
 interface Contact {
     name: string;
@@ -16,21 +16,16 @@ export default function Contacts() {
         });
     }
 
-    const contacts: Contact[] = [
-        { name: 'John', avatar: avatar },
-        { name: 'Jennifer', avatar: avatar },
-        { name: 'maya', avatar: avatar },
-        { name: 'Jess', avatar: avatar },
-        { name: 'Sister Alice', avatar: avatar },
-    ];
-
     return (
         <div className={styles.container}>
             <p>Contacts</p>
             <ul>
-                {contacts.map((contact, index) => (
+                {contactsData.map((contact, index) => (
                     <li key={index} onClick={() => handleClick(contact)}>
-                        <img src={contact.avatar} alt="avatar" />
+                        <img
+                            src={process.env.PUBLIC_URL + `${contact.avatar}`}
+                            alt={contact.name}
+                        />
                         <p>{contact.name}</p>
                     </li>
                 ))}

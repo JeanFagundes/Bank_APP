@@ -1,0 +1,31 @@
+.container {
+    display: flex;
+    list-style-type: none;
+    align-content: center;
+    height: 80px;
+    flex-wrap: wrap;
+    gap: 12px;
+    & .container__logo {
+        padding: 14px 6px;
+        display: flex;
+        background-color: #79767d;
+        border-radius: 14px;
+        img {
+            align-self: center;
+        }
+    }
+
+    & .container__twoItens {
+        text-align: left;
+    }
+
+    & .container__creditCardItem {
+        margin-left: auto;
+        background-color: #79767d;
+        height: 24px;
+        min-width: 62px;
+        overflow: auto;
+        border-radius: 6px;
+        text-align: center;
+    }
+}

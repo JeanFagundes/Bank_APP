@@ -12,9 +12,6 @@ export default function SubHeader({ name, avatar }: IProps) {
         navigate('/dashboard');
     }
     const navigate = useNavigate();
-    console.log(name);
-    console.log(avatar);
-
     return (
         <div className={styles.subHeader}>
             <div onClick={handleClick} className={styles.subHeader__icon}>

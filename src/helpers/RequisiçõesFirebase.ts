@@ -1,17 +1,5 @@
-import { AuthContext } from 'context/AuthContext';
 import { db } from 'db/firebase';
-import {
-    DocumentReference,
-    FieldValue,
-    arrayUnion,
-    doc,
-    getDoc,
-    increment,
-    setDoc,
-    updateDoc,
-    deleteField,
-    arrayRemove,
-} from 'firebase/firestore';
+import { arrayUnion, doc, getDoc, updateDoc, arrayRemove } from 'firebase/firestore';
 import { ICard } from 'types/Card';
 import { IUserCardProps } from 'types/IUserCardProps';
 
@@ -66,6 +54,28 @@ export async function increaseBalance(userId: string, balance: number) {
     const updatedCards = userData.map((card: ICard) => {
         if (typeof card.balance === 'number') {
             const updatedBalance = card.balance + balance;
+            return { ...card, balance: updatedBalance };
+        }
+        return card;
+    });
+    await updateDoc(userRef, {
+        cards: arrayRemove(...userData), // Remove todos os elementos antigos do array
+    });
+
+    await updateDoc(userRef, {
+        cards: arrayUnion(...updatedCards), // Adiciona os novos elementos ao array
+    });
+}
+
+export async function transfer(userId: string, balance: number) {
+    const userRef = doc(db, 'users', userId);
+    const docSnap = await getDoc(userRef);
+    // const userData = await docSnap.get('cards');
+    const userData = docSnap.get('cards');
+
+    const updatedCards = userData.map((card: ICard) => {
+        if (typeof card.balance === 'number') {
+            const updatedBalance = card.balance - balance;
             return { ...card, balance: updatedBalance };
         }
         return card;

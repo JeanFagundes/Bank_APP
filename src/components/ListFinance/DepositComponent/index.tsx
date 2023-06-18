@@ -1,11 +1,11 @@
 import styles from './DepositComponent.module.scss';
 import Button from 'components/Button';
-import logovisa from 'assets/imgs/logovisa.svg';
 import { useContext, useState } from 'react';
 import { AuthContext } from 'context/AuthContext';
 import { increaseBalance } from 'helpers/RequisiçõesFirebase';
 import { UserContext } from 'context/userContext';
 import SubHeader from 'components/SubHeader';
+import CardInfoSubHeader from '../CardInfoSubHeader';
 
 export default function DepositComponent() {
     const [value, setValue] = useState('');
@@ -71,21 +71,15 @@ export default function DepositComponent() {
             </div>
 
             <div className={styles.container__input}>
-                <input value={value} type="text" onChange={handleChange} />
+                <input
+                    value={value}
+                    type="text"
+                    onChange={handleChange}
+                    inputMode="numeric"
+                />
             </div>
 
-            <ul className={styles.container__lista}>
-                <li className={styles.container__logo}>
-                    <img src={logovisa} alt="logovisa" />
-                </li>
-                <li className={styles.container__twoItens}>
-                    <p>Visa</p>
-                    <p>{balance}</p>
-                </li>
-                <li className={styles.container__creditCardItem}>
-                    <p>** {numberCard}</p>
-                </li>
-            </ul>
+            <CardInfoSubHeader balance={balance} numberCard={numberCard} />
 
             <div className={styles.container__button}>
                 <Button

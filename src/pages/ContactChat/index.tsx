@@ -1,15 +1,11 @@
 import SubHeader from 'components/SubHeader';
 import styles from './ContactChat.module.scss';
 import { useLocation } from 'react-router-dom';
+import { IContact } from 'types/Contact';
 
-interface Contact {
-    name: string;
-    avatar: string;
-}
 export default function ContactChat() {
     const location = useLocation();
-    // const { name } = useParams<{ name: string }>();
-    const { contact } = location.state as { contact: Contact };
+    const { contact } = location.state as { contact: IContact };
 
     return (
         <div className={styles.container}>

@@ -1,0 +1,49 @@
+.container {
+    background: #252626;
+    border-radius: 20px;
+    padding: 16px;
+    position: fixed;
+    top: 132px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+
+    &__contact {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        > img {
+            width: 60px;
+        }
+    }
+
+    &__cardNumber {
+        position: absolute;
+        top: 68px;
+        background: #363339;
+        border-radius: 8px;
+        padding: 2px 8px;
+        font-size: 12px;
+    }
+
+    &__contactName {
+        margin-top: 16px;
+    }
+
+    &__input {
+        padding: 34px 0;
+        touch-action: manipulation;
+        input {
+            font-size: 22px;
+            color: #ffffff;
+            border: none;
+            text-align: center;
+            outline: none;
+            background-color: transparent;
+            border-bottom: 0.4px solid white;
+        }
+    }
+}
