@@ -1,32 +1,42 @@
 import { IContact } from 'types/Contact';
 import styles from './TransferModal.module.scss';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import CardInfoSubHeader from 'components/ListFinance/CardInfoSubHeader';
 import Button from 'components/Button';
 import { IUserData } from 'types/UserData';
 import { User } from 'firebase/auth';
 import { transfer } from 'helpers/RequisiçõesFirebase';
+import { IHistoryTransaction } from 'types/HistoryTransaction';
+import dateFormatter from 'helpers/DateFormatter';
 
 interface IModalProps {
     onClose: () => void;
     contact: IContact;
     userData: IUserData | null;
-    loading: boolean;
     setLoading: React.Dispatch<React.SetStateAction<boolean>>;
     userAuthentication: User | null;
     setMessageTransfer: React.Dispatch<React.SetStateAction<string>>;
+    setHistoryTransaction: React.Dispatch<React.SetStateAction<IHistoryTransaction[]>>;
 }
 export default function TransferModal({
     onClose,
     userData,
     contact,
-    loading,
     setLoading,
     userAuthentication,
     setMessageTransfer,
+    setHistoryTransaction,
 }: IModalProps) {
     const [value, setValue] = useState('');
     const [message, setMessage] = useState('');
+
+    useEffect(() => {
+        document.body.classList.add('modal-open');
+
+        return () => {
+            document.body.classList.remove('modal-open');
+        };
+    }, []);
 
     function handleClickTransferMoney() {
         if (userAuthentication && userData) {
@@ -35,7 +45,7 @@ export default function TransferModal({
             setLoading(true);
 
             if (balance > userData.cards[0].balance) {
-                setMessage('Saldo insuficiente para realizar a transferência');
+                setMessage('Insufficient balance to make a transfer');
                 setValue('');
                 setTimeout(() => {
                     setMessage('');
@@ -53,10 +63,26 @@ export default function TransferModal({
 
             transfer(userId, balance)
                 .then(() => {
+                    const newTransaction = {
+                        id: 1,
+                        amount: balance,
+                        date: dateFormatter.format(new Date()),
+                        to: contact,
+                        transactionType: 'Transfer',
+                        userId: userId,
+                        card: userData.cards[0],
+                        read: false,
+                    };
+
+                    setHistoryTransaction(
+                        (prevHistory) =>
+                            [...prevHistory, newTransaction] as IHistoryTransaction[]
+                    );
+
                     setMessageTransfer(
-                        `Você transferiu o valor de R$${balance.toFixed(
+                        `you transferred the amount of R$${balance.toFixed(
                             2
-                        )} com sucesso para ${contact.name}`
+                        )} with susseco to ${contact.name}`
                     );
                     onClose();
                     setValue('');

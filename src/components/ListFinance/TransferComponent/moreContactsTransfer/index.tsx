@@ -1,5 +1,6 @@
 import { IContact } from 'types/Contact';
 import styles from './MoreContactsTransfer.module.scss';
+import { useEffect } from 'react';
 
 interface IContactsProps {
     onClose: () => void;
@@ -16,12 +17,19 @@ export default function MoreContactsTransfer({
         handleContactClick(contact);
     };
 
+    useEffect(() => {
+        document.body.classList.add('modal-open');
+        return () => {
+            document.body.classList.remove('modal-open');
+        };
+    }, []);
+
     return (
         <div className={styles.container}>
             <h3>All contacts</h3>
             <ul>
-                {contacts.map((contact, index) => (
-                    <li key={index} onClick={() => handleClick(contact)}>
+                {contacts.map((contact) => (
+                    <li key={contact.id} onClick={() => handleClick(contact)}>
                         <img
                             src={process.env.PUBLIC_URL + `${contact.avatar}`}
                             alt={contact.name}

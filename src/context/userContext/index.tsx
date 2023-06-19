@@ -4,12 +4,15 @@ import { doc, onSnapshot } from 'firebase/firestore';
 import { db } from 'db/firebase';
 import { AuthContext } from 'context/AuthContext';
 import { IUserData } from 'types/UserData';
+import { IHistoryTransaction } from 'types/HistoryTransaction';
 
 interface UserContextData {
     userData: IUserData | null;
     setUserData: React.Dispatch<React.SetStateAction<IUserData | null>>;
     loading: boolean;
     setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+    historyTransaction: IHistoryTransaction[];
+    setHistoryTransaction: React.Dispatch<React.SetStateAction<IHistoryTransaction[]>>;
 }
 
 interface AuthProviderProps {
@@ -18,16 +21,20 @@ interface AuthProviderProps {
 
 export const UserContext = createContext<UserContextData>({
     userData: null,
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     setUserData: () => {},
     loading: true,
     setLoading: () => {},
+    historyTransaction: [],
+    setHistoryTransaction: () => {},
 });
 
 export const UserProvider = ({ children }: AuthProviderProps) => {
     const [userData, setUserData] = useState<IUserData | null>(null);
     const { userAuthentication } = useContext(AuthContext);
     const [loading, setLoading] = useState(true);
+    const [historyTransaction, setHistoryTransaction] = useState<IHistoryTransaction[]>(
+        []
+    );
 
     useEffect(() => {
         // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -64,7 +71,15 @@ export const UserProvider = ({ children }: AuthProviderProps) => {
     }, [userAuthentication]);
 
     return (
-        <UserContext.Provider value={{ userData, setUserData, loading, setLoading }}>
+        <UserContext.Provider
+            value={{
+                userData,
+                setUserData,
+                loading,
+                setLoading,
+                historyTransaction,
+                setHistoryTransaction,
+            }}>
             {children}
         </UserContext.Provider>
     );

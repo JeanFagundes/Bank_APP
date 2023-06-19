@@ -15,7 +15,8 @@ export default function TransferComponent() {
     const [openModalContacts, setOpenModalContacts] = useState<IContact[] | null>(null);
     const [messageTransfer, setMessageTransfer] = useState('');
     const { userAuthentication } = useContext(AuthContext);
-    const { userData, loading, setLoading } = useContext(UserContext);
+    const { userData, setLoading, historyTransaction, setHistoryTransaction } =
+        useContext(UserContext);
 
     const handleContactClick = (contact: IContact) => {
         setOpenModal(contact);
@@ -66,8 +67,10 @@ export default function TransferComponent() {
                 <div className={styles.container__card}>
                     <p>Send money to</p>
                     <ul>
-                        {contactsData.slice(0, 3).map((contact, index) => (
-                            <li key={index} onClick={() => handleContactClick(contact)}>
+                        {contactsData.slice(0, 3).map((contact) => (
+                            <li
+                                key={contact.id}
+                                onClick={() => handleContactClick(contact)}>
                                 <img
                                     src={process.env.PUBLIC_URL + `${contact.avatar}`}
                                     alt={contact.name}
@@ -81,7 +84,10 @@ export default function TransferComponent() {
                         </li>
                     </ul>
                 </div>
-                <Contacts />
+                <Contacts
+                    historyTransaction={historyTransaction}
+                    contactsData={contactsData}
+                />
             </div>
             {openModal && (
                 <TransferModal
@@ -89,9 +95,9 @@ export default function TransferComponent() {
                     contact={openModal}
                     userData={userData}
                     userAuthentication={userAuthentication}
-                    loading={loading}
                     setLoading={setLoading}
                     setMessageTransfer={setMessageTransfer}
+                    setHistoryTransaction={setHistoryTransaction}
                 />
             )}
             {openModalContacts && (
