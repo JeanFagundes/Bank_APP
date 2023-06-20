@@ -64,14 +64,12 @@ export default function TransferModal({
             transfer(userId, balance)
                 .then(() => {
                     const newTransaction = {
-                        id: 1,
                         amount: balance,
                         date: dateFormatter.format(new Date()),
                         to: contact,
                         transactionType: 'Transfer',
                         userId: userId,
                         card: userData.cards[0],
-                        read: false,
                     };
 
                     setHistoryTransaction(

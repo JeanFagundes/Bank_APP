@@ -6,20 +6,36 @@ import { increaseBalance } from 'helpers/RequisiçõesFirebase';
 import { UserContext } from 'context/userContext';
 import SubHeader from 'components/SubHeader';
 import CardInfoSubHeader from '../CardInfoSubHeader';
+import dateFormatter from 'helpers/DateFormatter';
+import { IHistoryTransaction } from 'types/HistoryTransaction';
 
 export default function DepositComponent() {
     const [value, setValue] = useState('');
     const [message, setMessage] = useState('');
     const { userAuthentication } = useContext(AuthContext);
-    const { userData, loading, setLoading } = useContext(UserContext);
+    const { userData, loading, setLoading, setHistoryTransaction } =
+        useContext(UserContext);
 
     function handleClickIncrementBalance() {
-        if (userAuthentication) {
+        if (userAuthentication && userData) {
             const userId = userAuthentication.uid.toString();
             const balance = Number(value.replace(/,/g, '')); // Remover vírgulas;
             setLoading(true);
             increaseBalance(userId, balance)
                 .then(() => {
+                    const newDeposit = {
+                        amount: balance,
+                        date: dateFormatter.format(new Date()),
+                        transactionType: 'Deposit',
+                        userId: userId,
+                        card: userData.cards[0],
+                    };
+
+                    setHistoryTransaction(
+                        (prevHistory) =>
+                            [...prevHistory, newDeposit] as IHistoryTransaction[]
+                    );
+
                     setMessage(`Você depositou R$${balance.toFixed(2)} com sucesso`);
                     setValue('');
                     setTimeout(() => {

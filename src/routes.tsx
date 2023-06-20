@@ -23,9 +23,9 @@ function App() {
                         <Route path="/register" element={<Register />} />
                         <Route path="/dashboard" element={<Dashboard />} />
                         <Route path="/transfer" element={<Transfer />} />
+                        <Route path="/contactChat/:name" element={<ContactChat />} />
                         <Route path="/deposit" element={<Deposit />} />
                         <Route path="/investment" element={<Investment />} />
-                        <Route path="/contactChat/:name" element={<ContactChat />} />
                     </Routes>
                 </UserProvider>
             </AuthProvider>

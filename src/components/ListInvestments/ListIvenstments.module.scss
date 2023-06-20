@@ -1,0 +1,32 @@
+@import 'styles/variables.scss';
+
+.container {
+    overflow: hidden;
+    padding-top: 30px;
+    ul {
+        list-style-type: none;
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: scroll;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
+
+    li {
+        min-width: 55%;
+        text-align: center;
+        transition: all 0.6s ease-out;
+        border-bottom: 2px solid transparent;
+        font-size: 18px;
+        font-weight: 400;
+        &.container__selected {
+            border-bottom: 2px solid $mint; /* Cor e espessura da borda inferior */
+        }
+        &:not(.container__selected) {
+            transition: scale-out-horizontal 0.5s both;
+        }
+    }
+}
