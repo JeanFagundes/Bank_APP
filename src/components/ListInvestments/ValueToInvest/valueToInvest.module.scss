@@ -1,0 +1,52 @@
+@import 'styles/variables.scss';
+
+.container {
+    padding-top: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    & .container__button {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+        justify-content: center;
+
+        button {
+            color: #fff;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            border: none;
+            background-color: $mint;
+            border-radius: 50%;
+            font-size: 23px;
+            height: 48px;
+            width: 48px;
+            line-height: 1.5;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        button:last-child {
+            font-size: 28px;
+        }
+    }
+
+    &__spanAndValue {
+        display: flex;
+        gap: 8px;
+        font-size: 21px;
+        font-weight: 500;
+
+        input {
+            margin-top: 3px;
+            font-size: 22px;
+            color: #fff;
+            width: 100%;
+            outline: none;
+            border: none;
+            background: transparent;
+            font-weight: bold;
+        }
+    }
+}

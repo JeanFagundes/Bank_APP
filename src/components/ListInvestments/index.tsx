@@ -1,9 +1,10 @@
-import { useState } from 'react';
 import styles from './ListIvenstments.module.scss';
 
-export default function ListIvenstments() {
-    const [selectedItem, setSelectedItem] = useState<number | null>(null);
-
+interface IProps {
+    selectedItem: number | null;
+    setSelectedItem: (value: number | null) => void;
+}
+export default function ListIvenstments({ selectedItem, setSelectedItem }: IProps) {
     const items = [
         { id: 1, name: 'Tesouro Prefixado' },
         { id: 2, name: 'Tesouro Selic' },

@@ -1,0 +1,50 @@
+@import 'styles/variables.scss';
+
+.container {
+    padding-top: 40px;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 34px;
+    p {
+        font-weight: 500;
+        font-size: 18px;
+    }
+
+    &__inputRange {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        h2 {
+            font-size: 28px;
+        }
+        input {
+            width: 100%;
+            height: 1px;
+            cursor: pointer;
+            -webkit-appearance: none;
+            background-color: $mint;
+        }
+        input::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 30px;
+            height: 30px;
+            background-color: $mint;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: -2px 0px 0px 2px $gray-solid, 2px 0px 0px 2px $gray-solid;
+        }
+
+        input::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background-color: $mint;
+
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: -2px 0px 0px 2px $gray-solid, 2px 0px 0px 2px $gray-solid;
+        }
+    }
+}

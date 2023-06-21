@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import styles from './SimulateAndInvest.module.scss';
 
 interface IProps {
