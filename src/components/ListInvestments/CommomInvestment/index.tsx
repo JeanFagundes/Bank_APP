@@ -6,7 +6,7 @@ import ValueToInvest from '../ValueToInvest';
 export default function CommomInvestment() {
     const [selectedRange, setSetelectRange] = useState<number>(5);
     const year = 2;
-    const futureBalance = 5000;
+    const futureBalance = '5.000.00';
     const investType = 'Prefixed treasury';
 
     const handleRangeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -64,21 +64,19 @@ export default function CommomInvestment() {
                 />
             </div>
 
-            <div>
-                <p>In {year} years you would have </p>
+            <div className={styles.container__returnInvestment}>
+                <p>In {selectMonths} years you would have </p>
                 <h2>R$ {futureBalance}</h2>
             </div>
 
-            <div>
+            <div className={styles.container__investmentInformation}>
                 <p>Total invested: </p>
                 <p>In saving, your money would yield: </p>
                 <p>In the {investType}, your money would yield: </p>
             </div>
 
-            <div>
-                <div>
-                    <BiHelpCircle />
-                </div>
+            <div className={styles.container__baseCalc}>
+                <BiHelpCircle size={34} />
                 <div>
                     <p>
                         Values used in the investment simulator (referring to the last

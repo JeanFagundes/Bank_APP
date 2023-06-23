@@ -40,11 +40,36 @@
             width: 20px;
             height: 20px;
             background-color: $mint;
-
             border: none;
             border-radius: 50%;
             cursor: pointer;
             box-shadow: -2px 0px 0px 2px $gray-solid, 2px 0px 0px 2px $gray-solid;
+        }
+    }
+
+    & .container__returnInvestment {
+        padding-top: 30px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        border-bottom: 4px solid $mint;
+        border-radius: 2px;
+        padding-bottom: 24px;
+        > h2 {
+            font-size: 32px;
+        }
+    }
+    &__investmentInformation {
+        line-height: 34px;
+        margin-top: -20px;
+    }
+    &__baseCalc {
+        display: flex;
+        gap: 12px;
+
+        &__baseCalc,
+        p {
+            font-size: 12px;
         }
     }
 }
