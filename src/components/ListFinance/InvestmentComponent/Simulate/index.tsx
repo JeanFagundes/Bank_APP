@@ -4,7 +4,7 @@ import { useState } from 'react';
 import CommomInvestment from 'components/ListInvestments/CommomInvestment';
 
 export default function Simulate() {
-    const [selectedItem, setSelectedItem] = useState<number | null>(null);
+    const [selectedItem, setSelectedItem] = useState<string>('Prefixed Treasury');
 
     return (
         <div className={styles.container}>
@@ -12,7 +12,7 @@ export default function Simulate() {
                 selectedItem={selectedItem}
                 setSelectedItem={setSelectedItem}
             />
-            <CommomInvestment />
+            <CommomInvestment investType={selectedItem} />
         </div>
     );
 }

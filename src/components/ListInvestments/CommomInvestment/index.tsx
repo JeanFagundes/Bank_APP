@@ -3,16 +3,18 @@ import styles from './commomInvestment.module.scss';
 import { BiHelpCircle } from 'react-icons/bi';
 import ValueToInvest from '../ValueToInvest';
 
-export default function CommomInvestment() {
+interface IProps {
+    investType: string;
+}
+
+export default function CommomInvestment({ investType }: IProps) {
     const [selectedRange, setSetelectRange] = useState<number>(5);
-    const year = 2;
-    const futureBalance = '5.000.00';
-    const investType = 'Prefixed treasury';
+    const [initialValue, setInitialValue] = useState(5250);
+    const [monthValue, setMonthValue] = useState(300);
 
     const handleRangeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSetelectRange(parseInt(event.target.value));
     };
-
     const getValueLabel = (value: number) => {
         switch (value) {
             case 0:
@@ -35,19 +37,63 @@ export default function CommomInvestment() {
                 return '';
         }
     };
-
     const selectMonths = getValueLabel(selectedRange);
+
+    const profitInvestment = (months: number, annualInterestRate: number) => {
+        annualInterestRate = Math.pow(1 + annualInterestRate, 1 / 12) - 1;
+        const result =
+            initialValue * Math.pow(1 + annualInterestRate, months) +
+            monthValue *
+                ((Math.pow(1 + annualInterestRate, months) - 1) / annualInterestRate);
+        return result;
+    };
+
+    const investment = () => {
+        const month = selectMonths.split(' ')[0];
+        const months = Number(month);
+
+        const totalInvest = initialValue + months * monthValue;
+        const resultInvestment = profitInvestment(months, 0.1308);
+        const resultSavingInvestment = profitInvestment(months, 0.061) - totalInvest;
+        const resultInvestmentProfit = resultInvestment - totalInvest;
+
+        return [
+            resultInvestment.toLocaleString('en-US', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+            }),
+            totalInvest.toLocaleString('en-US', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+            }),
+            resultSavingInvestment.toLocaleString('en-US', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+            }),
+            resultInvestmentProfit.toLocaleString('en-US', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+            }),
+        ];
+    };
+
+    const [
+        totalValueInvest,
+        totalInvest,
+        resultSavingInvestment,
+        resultInvestmentProfit,
+    ] = investment();
 
     return (
         <div className={styles.container}>
             <div>
                 <p>To begin with, what amount would you like to invest?</p>
-                <ValueToInvest />
+                <ValueToInvest value={initialValue} setValue={setInitialValue} />
             </div>
 
             <div>
                 <p>And per month, how much would you like to deposit?</p>
-                <ValueToInvest />
+                <ValueToInvest value={monthValue} setValue={setMonthValue} />
             </div>
 
             <div className={styles.container__inputRange}>
@@ -66,13 +112,18 @@ export default function CommomInvestment() {
 
             <div className={styles.container__returnInvestment}>
                 <p>In {selectMonths} years you would have </p>
-                <h2>R$ {futureBalance}</h2>
+                <h2>
+                    R$
+                    {totalValueInvest}
+                </h2>
             </div>
 
             <div className={styles.container__investmentInformation}>
-                <p>Total invested: </p>
-                <p>In saving, your money would yield: </p>
-                <p>In the {investType}, your money would yield: </p>
+                <p>Total invested: {totalInvest}</p>
+                <p>In saving, your money would yield: {resultSavingInvestment}</p>
+                <p>
+                    In the {investType}, your money would yield: {resultInvestmentProfit}
+                </p>
             </div>
 
             <div className={styles.container__baseCalc}>
@@ -82,7 +133,7 @@ export default function CommomInvestment() {
                         Values used in the investment simulator (referring to the last
                         update date - these values may change according to the market):{' '}
                     </p>
-                    <p>- Date of last update: 06/30/2022</p>
+                    <p>- Date of last update: 30/06/2022</p>
                     <p>- Profitability percentage of Savings: 0.50% p.m.</p>
                     <p>- Percentage of return on Fixed-rate Treasury: 13.08% p.a.</p>
                 </div>
