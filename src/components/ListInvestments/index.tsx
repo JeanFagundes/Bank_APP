@@ -7,9 +7,7 @@ interface IProps {
 export default function ListIvenstments({ selectedItem, setSelectedItem }: IProps) {
     const items = [
         { id: 1, name: 'Prefixed Treasury' },
-        { id: 3, name: 'Treasury IPCA+' },
-        { id: 4, name: 'CDB e LC' },
-        { id: 5, name: 'LCI e LCA' },
+        { id: 2, name: 'CDB e LC' },
     ];
 
     return (

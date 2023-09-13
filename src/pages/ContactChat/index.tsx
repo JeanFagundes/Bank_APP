@@ -14,12 +14,10 @@ export default function ContactChat() {
         historyTransaction: IHistoryTransaction[];
     };
 
-    // const reversedHistoryTransaction = [...historyTransaction].reverse();
-
     useEffect(() => {
         const container = containerRef.current;
         if (container) {
-            container.scrollTop = container.scrollHeight; // Define o scroll no final do container
+            container.scrollTop = container.scrollHeight;
         }
     }, []);
 

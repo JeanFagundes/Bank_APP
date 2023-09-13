@@ -1,17 +1,8 @@
 @import 'styles/variables.scss';
 
 .container {
-    &__content {
-        display: flex;
-        justify-content: center;
-        gap: 25%;
-        > h2 {
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        & .container__selected {
-            font-size: 1.7em;
-            border-bottom: 2px solid $mint;
-        }
+    padding-top: 18px;
+    & p {
+        padding-top: 8px;
     }
 }

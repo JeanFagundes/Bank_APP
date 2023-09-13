@@ -12,6 +12,11 @@ export default function CommomInvestment({ investType }: IProps) {
     const [initialValue, setInitialValue] = useState(5250);
     const [monthValue, setMonthValue] = useState(300);
 
+    const profitable = investType === 'Prefixed Treasury' ? 0.1308 : 0.152;
+
+    console.log(investType);
+    console.log(profitable);
+
     const handleRangeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSetelectRange(parseInt(event.target.value));
     };
@@ -53,7 +58,7 @@ export default function CommomInvestment({ investType }: IProps) {
         const months = Number(month);
 
         const totalInvest = initialValue + months * monthValue;
-        const resultInvestment = profitInvestment(months, 0.1308);
+        const resultInvestment = profitInvestment(months, profitable);
         const resultSavingInvestment = profitInvestment(months, 0.061) - totalInvest;
         const resultInvestmentProfit = resultInvestment - totalInvest;
 
@@ -135,7 +140,11 @@ export default function CommomInvestment({ investType }: IProps) {
                     </p>
                     <p>- Date of last update: 30/06/2022</p>
                     <p>- Profitability percentage of Savings: 0.50% p.m.</p>
-                    <p>- Percentage of return on Fixed-rate Treasury: 13.08% p.a.</p>
+                    {investType === 'Prefixed Treasury' ? (
+                        <p>- Percentage of return on Fixed-rate Treasury: 13.08% p.a.</p>
+                    ) : (
+                        <p>- Percentage of CDB and LC profitability: 127% of the CDI.</p>
+                    )}
                 </div>
             </div>
         </div>

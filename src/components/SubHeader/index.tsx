@@ -8,10 +8,10 @@ interface IProps {
 }
 
 export default function SubHeader({ name, avatar }: IProps) {
+    const navigate = useNavigate();
     function handleClick() {
         navigate('/dashboard');
     }
-    const navigate = useNavigate();
     return (
         <div className={styles.subHeader}>
             <div onClick={handleClick} className={styles.subHeader__icon}>

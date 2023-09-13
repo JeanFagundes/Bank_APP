@@ -29,6 +29,13 @@ export default function Contacts({ historyTransaction, contactsData }: IContacts
                     const filteredTransactions = historyTransaction.filter(
                         (transaction) => transaction.to?.id === contact.id
                     );
+
+                    // Obtenha a última transação dentro de filteredTransactions
+                    const lastTransaction =
+                        filteredTransactions.length > 0
+                            ? filteredTransactions[filteredTransactions.length - 1]
+                            : null;
+
                     return (
                         <li
                             key={contact.id}
@@ -40,16 +47,14 @@ export default function Contacts({ historyTransaction, contactsData }: IContacts
                                 />
                                 <p>{contact.name}</p>
                             </div>
-                            {filteredTransactions.map((transaction) => (
-                                <div
-                                    key={contact.id}
-                                    className={styles.container__dataAndMessage}>
+                            {lastTransaction && (
+                                <div className={styles.container__dataAndMessage}>
                                     <img src={messageicon} alt="" />
                                     <p className={styles.container__date}>{`${
-                                        transaction.date.split('/')[0]
-                                    }/${transaction.date.split('/')[1]}`}</p>
+                                        lastTransaction.date.split('/')[0]
+                                    }/${lastTransaction.date.split('/')[1]}`}</p>
                                 </div>
-                            ))}
+                            )}
                         </li>
                     );
                 })}

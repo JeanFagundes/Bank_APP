@@ -17,6 +17,7 @@ export default function ValueToInvest({ value, setValue }: IProps) {
             setValue(Number(formattedValue));
         }
     };
+    
     return (
         <div className={styles.container}>
             <div className={styles.container__spanAndValue}>
