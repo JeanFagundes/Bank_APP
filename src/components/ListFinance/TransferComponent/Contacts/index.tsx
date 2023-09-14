@@ -35,7 +35,6 @@ export default function Contacts({ historyTransaction, contactsData }: IContacts
                         filteredTransactions.length > 0
                             ? filteredTransactions[filteredTransactions.length - 1]
                             : null;
-
                     return (
                         <li
                             key={contact.id}

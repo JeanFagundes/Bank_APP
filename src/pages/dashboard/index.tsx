@@ -44,7 +44,7 @@ export default function Dashboard() {
                 {card && userData?.cards[0] ? (
                     <Card {...userData.cards[0]} />
                 ) : (
-                    loading && <RequestCard />
+                    <RequestCard />
                 )}
             </div>
             <div>
