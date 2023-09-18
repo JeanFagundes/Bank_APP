@@ -1,15 +1,14 @@
 import styles from './Header.module.scss';
 import logo from 'assets/imgs/logo.svg';
 import avatar from 'assets/imgs/avatar.png';
-import more from 'assets/imgs/more.png';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from 'context/userContext';
-import { useContext, useState } from 'react';
-import { getAuth, signOut } from 'firebase/auth';
+import { useContext } from 'react';
+import { signOut } from 'firebase/auth';
+import { auth } from 'db/firebase';
 
 export default function Header() {
-    const { userData } = useContext(UserContext);
-    const [configOpen, setConfigOpen] = useState(false);
+    const { userData, setUserData } = useContext(UserContext);
 
     const navigate = useNavigate();
     function handleClick() {
@@ -17,17 +16,16 @@ export default function Header() {
         navigate(rota);
     }
 
-    function handleConfigClick() {
-        setConfigOpen(!configOpen);
-    }
-
     async function handleLogoutClick() {
-        try {
-            await signOut(getAuth()); // Chame o método signOut com getAuth()
-            setConfigOpen(false);
-            navigate('/'); // Redirecione para a página de login ou a página desejada após o logout
-        } catch (error) {
-            console.error('Erro ao fazer logout:', error);
+        const confirmed = window.confirm('Are you sure you want to log out?');
+        if (confirmed) {
+            try {
+                setUserData(null);
+                await signOut(auth); // Chame o método signOut com getAuth()
+                navigate('/'); // Redirecione para a página de login ou a página desejada após o logout
+            } catch (error) {
+                console.error('Erro ao fazer logout:', error);
+            }
         }
     }
 
@@ -35,7 +33,7 @@ export default function Header() {
         <nav className={styles.container}>
             <ul className={styles.container__list}>
                 {userData === null ? (
-                    <li className={styles.container__logo}></li>
+                    <li className={styles.container__logo}>hihi</li>
                 ) : (
                     <li>
                         <img src={avatar} alt="avatar" />
@@ -45,14 +43,7 @@ export default function Header() {
                     <img src={logo} alt="logo do banco" />
                 </li>
 
-                <li className={styles.container__menuContainer}>
-                    <img src={more} alt="3 pontos" onClick={handleConfigClick} />
-                </li>
-                {configOpen && (
-                    <ul className={styles.container__config}>
-                        <li onClick={handleLogoutClick}>Logout</li>
-                    </ul>
-                )}
+                <li>{userData && <p onClick={handleLogoutClick}>Logout</p>}</li>
             </ul>
         </nav>
     );

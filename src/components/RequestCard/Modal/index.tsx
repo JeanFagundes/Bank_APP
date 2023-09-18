@@ -68,7 +68,7 @@ export default function Modal({ onClose }: IModalProps) {
             card.userId = userAuthentication.uid;
             addCardToUser(card);
         } else {
-            console.log('Erro ao adicionar Cartão, usuario não está autenticado');
+            console.error('Erro ao adicionar Cartão, usuario não está autenticado');
         }
     }
 

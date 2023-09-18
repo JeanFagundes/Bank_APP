@@ -21,8 +21,6 @@ export default function ContactChat() {
         }
     }, []);
 
-    console.log(historyTransaction);
-
     return (
         <div className={styles.container} ref={containerRef}>
             <div className={styles.container__subHeader}>

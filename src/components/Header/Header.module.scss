@@ -14,23 +14,12 @@
         align-items: center;
         justify-content: space-between;
         list-style-type: none;
+        > li,
+        p {
+            color: white;
+        }
     }
     li {
         cursor: pointer;
-    }
-    &__config {
-        position: relative;
-        top: 4%;
-        right: 20%;
-        background: $gray-solid;
-        color: white;
-        list-style-type: none;
-        display: flex;
-        flex-direction: column;
-        z-index: 1; /* Para garantir que o menu fique sobre o conteúdo */
-
-        &:hover {
-            background-color: #f2f2f2;
-        }
     }
 }

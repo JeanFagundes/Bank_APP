@@ -1,8 +1,8 @@
 import styles from './ListFinance.module.scss';
 import { BiTransferAlt } from 'react-icons/bi';
 import { BsPiggyBank } from 'react-icons/bs';
-import { ReactComponent as InvestmentIcon } from 'assets/imgs/investment.svg';
 import { useNavigate } from 'react-router-dom';
+import iconInvestment from 'assets/imgs/iconInvestment.png';
 
 export default function ListFinance() {
     const navigate = useNavigate();
@@ -13,7 +13,7 @@ export default function ListFinance() {
 
     return (
         <div className={styles.container}>
-            <h3>Finances</h3>
+            <h2>Finances</h2>
             <ul className={styles.container__list}>
                 <li onClick={() => handleClick('/transfer')}>
                     <BiTransferAlt className={styles.container__iconBackground} />
@@ -26,8 +26,8 @@ export default function ListFinance() {
                 </li>
 
                 <li onClick={() => handleClick('/investment')}>
-                    <InvestmentIcon
-                        fill="#212121"
+                    <img
+                        src={iconInvestment}
                         className={styles.container__iconBackground}
                     />
                     <span>Investment</span>

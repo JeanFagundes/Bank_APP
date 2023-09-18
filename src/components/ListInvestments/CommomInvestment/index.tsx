@@ -14,9 +14,6 @@ export default function CommomInvestment({ investType }: IProps) {
 
     const profitable = investType === 'Prefixed Treasury' ? 0.1308 : 0.152;
 
-    console.log(investType);
-    console.log(profitable);
-
     const handleRangeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSetelectRange(parseInt(event.target.value));
     };

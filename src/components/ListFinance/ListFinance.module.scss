@@ -2,11 +2,16 @@
 
 .container {
     color: #ffffff;
+    > h2 {
+        text-align: center;
+        line-height: 3.5rem;
+    }
 
     &__list {
         display: flex;
         list-style-type: none;
         gap: 20px;
+        justify-content: space-between;
     }
     & .container__list li {
         display: flex;

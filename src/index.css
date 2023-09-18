@@ -9,6 +9,12 @@ body {
     background-color: #212121;
 }
 
+@media (min-width: 426px) {
+    body {
+        background-color: white;
+    }
+}
+
 body.modal-open {
     overflow: hidden;
     position: fixed;

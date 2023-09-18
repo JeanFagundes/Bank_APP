@@ -32,7 +32,6 @@ export async function addCardToUser({
             { cardNumber, expirationDate, balance, background },
         ];
         await updateDoc(userRef, { cards: updatedCards });
-        console.log('Card Adicionado');
     } else {
         console.log('Documento não encontrado ou sem dados');
     }

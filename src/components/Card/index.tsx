@@ -4,8 +4,12 @@ import visa from 'assets/imgs/visa.svg';
 import logo from 'assets/imgs/logo.svg';
 import paypass from 'assets/imgs/paypass.svg';
 import { ICard } from 'types/Card';
+import { UserContext } from 'context/userContext';
+import { useContext } from 'react';
 
 export default function Card({ cardNumber, expirationDate, background }: ICard) {
+    const { userData } = useContext(UserContext);
+
     return (
         <div className={styles.container} style={{ background }}>
             <div className={styles.container__cardArea}>
@@ -20,7 +24,7 @@ export default function Card({ cardNumber, expirationDate, background }: ICard) 
                 <div className={styles.container__item5}>
                     <span className={styles.container__textOcult}>{cardNumber} </span>
                 </div>
-                <p className={styles.container__item6}>Zaramello</p>
+                <p className={styles.container__item6}>{userData?.name.toUpperCase()}</p>
                 <div className={styles.container__item7}>
                     <p className={styles.container__expiration}>VALID THRU</p>
                     <p className={styles.container__expirationDate}>{expirationDate}</p>

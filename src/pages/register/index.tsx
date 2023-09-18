@@ -32,7 +32,7 @@ export default function Register() {
                     const userUid = userCredentials.user.uid;
                     cadastrarFirestore(newUser, userUid);
                 })
-                .catch((error) => console.log(error));
+                .catch((error) => console.error(error));
             return result;
         }
 

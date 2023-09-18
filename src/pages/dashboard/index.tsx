@@ -1,6 +1,6 @@
 import Balance from 'components/Balance';
 import styles from './Dashboard.module.scss';
-import Buscador from 'components/Buscador';
+// import Buscador from 'components/Buscador';
 import RequestCard from 'components/RequestCard';
 import Card from 'components/Card';
 import { useContext, useEffect, useState } from 'react';
@@ -38,7 +38,7 @@ export default function Dashboard() {
                 {card && userData?.cards[0] && (
                     <Balance balance={userData.cards[0].balance} />
                 )}
-                <Buscador />
+                {/* <Buscador /> */}
             </div>
             <div className={styles.container__card}>
                 {card && userData?.cards[0] ? (
