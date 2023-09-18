@@ -120,6 +120,8 @@ export default function TransferModal({
                     <img
                         src={process.env.PUBLIC_URL + `${contact.avatar}`}
                         alt={contact.name}
+                        width={48}
+                        height={48}
                     />
                     <div className={styles.container__cardNumber}>
                         <p>** 7458</p>

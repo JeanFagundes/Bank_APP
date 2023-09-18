@@ -1,6 +1,6 @@
 import styles from './Header.module.scss';
 import logo from 'assets/imgs/logo.svg';
-import avatar from 'assets/imgs/avatar.png';
+import avatar from 'assets/imgs/do-utilizador.png';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from 'context/userContext';
 import { useContext } from 'react';
@@ -36,7 +36,7 @@ export default function Header() {
                     <li className={styles.container__logo}>hihi</li>
                 ) : (
                     <li>
-                        <img src={avatar} alt="avatar" />
+                        <img src={avatar} alt="avatar" width={24} />
                     </li>
                 )}
                 <li onClick={handleClick}>

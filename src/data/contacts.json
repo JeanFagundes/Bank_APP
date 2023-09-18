@@ -1,9 +1,29 @@
 [
-    { "id": 1, "name": "John", "avatar": "/imgs/avatar.png" },
-    { "id": 2, "name": "Jennifer", "avatar": "/imgs/avatar.png" },
-    { "id": 3, "name": "Maya", "avatar": "/imgs/avatar.png" },
-    { "id": 4, "name": "Jess", "avatar": "/imgs/avatar.png" },
-    { "id": 5, "name": "Bruno", "avatar": "/imgs/avatar.png" },
-    { "id": 6, "name": "Washington", "avatar": "/imgs/avatar.png" },
-    { "id": 7, "name": "Guilherme", "avatar": "/imgs/avatar.png" }
+    {
+        "id": 1,
+        "name": "John",
+        "avatar": "/imgs/vecteezy_man-avatar-clipart-illustration_9305107_354.png"
+    },
+    {
+        "id": 2,
+        "name": "Jennifer",
+        "avatar": "/imgs/vecteezy_woman-face-expression-clipart-design-illustration_9379900_401.png"
+    },
+    {
+        "id": 3,
+        "name": "Maya",
+        "avatar": "/imgs/vecteezy_woman-face-expression-clipart-design-illustration_9397892_704.png"
+    },
+    { "id": 4, "name": "Jess", "avatar": "/imgs/garoto.png" },
+    {
+        "id": 5,
+        "name": "Bruno",
+        "avatar": "/imgs/vecteezy_man-avatar-clipart-illustration_9397835_607.png"
+    },
+    {
+        "id": 6,
+        "name": "Washington",
+        "avatar": "/imgs/vecteezy_man-face-expression-clipart-design-illustration_9400134_975.png"
+    },
+    { "id": 7, "name": "Guilherme", "avatar": "/imgs/homem.png" }
 ]

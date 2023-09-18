@@ -9,6 +9,7 @@ import { IContact } from 'types/Contact';
 import { UserContext } from 'context/userContext';
 import { AuthContext } from 'context/AuthContext';
 import MoreContactsTransfer from './moreContactsTransfer';
+import { BiPlusCircle } from 'react-icons/bi';
 
 export default function TransferComponent() {
     const [openModal, setOpenModal] = useState<IContact | null>(null);
@@ -79,7 +80,7 @@ export default function TransferComponent() {
                             </li>
                         ))}
                         <li onClick={() => handleMoreContacts(contactsData)}>
-                            <img src={avatar} alt="avatar" />
+                            <BiPlusCircle size={48} />
                             <p>Send</p>
                         </li>
                     </ul>

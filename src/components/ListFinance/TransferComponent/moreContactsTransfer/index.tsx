@@ -33,6 +33,8 @@ export default function MoreContactsTransfer({
                         <img
                             src={process.env.PUBLIC_URL + `${contact.avatar}`}
                             alt={contact.name}
+                            width={48}
+                            height={48}
                         />
                         <p>{contact.name}</p>
                     </li>
