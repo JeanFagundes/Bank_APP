@@ -19,7 +19,7 @@ export default function SubHeader({ name, avatar }: IProps) {
             </div>
             {avatar ? (
                 <div className={styles.subHeader__textWithAvatar}>
-                    <img src={avatar} alt="Avatar" />
+                    <img src={avatar} alt="Avatar" width={48} height={48} />
                     <p>{name}</p>
                 </div>
             ) : (
