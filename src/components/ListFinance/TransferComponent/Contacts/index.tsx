@@ -48,7 +48,7 @@ export default function Contacts({ historyTransaction, contactsData }: IContacts
                             </div>
                             {lastTransaction && (
                                 <div className={styles.container__dataAndMessage}>
-                                    <img src={messageicon} alt="" />
+                                    <img src={messageicon} alt="Visto" />
                                     <p className={styles.container__date}>{`${
                                         lastTransaction.date.split('/')[0]
                                     }/${lastTransaction.date.split('/')[1]}`}</p>
