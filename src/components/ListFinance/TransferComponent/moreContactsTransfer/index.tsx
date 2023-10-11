@@ -1,6 +1,7 @@
 import { IContact } from 'types/Contact';
 import styles from './MoreContactsTransfer.module.scss';
 import { useEffect } from 'react';
+import SubHeader from 'components/SubHeader';
 
 interface IContactsProps {
     onClose: () => void;

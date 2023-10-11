@@ -115,7 +115,7 @@ export default function Modal({ onClose }: IModalProps) {
                     Next
                 </FcNext>
             </div>
-            <div style={{ alignSelf: 'center' }}>
+            <div style={{ alignSelf: 'center', marginTop: '20px' }}>
                 <Button
                     handleClick={() => handleSelectCard(items[currentIndex])}
                     background={''}
